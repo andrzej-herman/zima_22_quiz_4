@@ -11,15 +11,23 @@ namespace Quiz
     {
         public Game()
         {
-            CurrentCategory = 100;
             GenerateQuestions();
             Random = new Random();
+            Categories = AllQuestions
+                .Select(q => q.Category)
+                .Distinct()
+                .OrderBy(c => c)
+                .ToList();
+
+            CurrentCategory = Categories[CategoryIndex];
         }
 
         public int CurrentCategory { get; set; }
         public List<Question> AllQuestions { get; set; }
         public Question CurrentQuestion { get; set; }
         public Random Random { get; set; }
+        public List<int> Categories { get; set; }
+        public int CategoryIndex { get; set; }
 
         private void GenerateQuestions()
         {
@@ -42,6 +50,22 @@ namespace Quiz
             }
            
             CurrentQuestion = selectedQuestion;
+        }
+
+        public bool IsCorrectAnswer(int playerAnswer)
+        {
+            return CurrentQuestion.Answers.First(a => a.DisplayOrder == playerAnswer).IsCorrect;
+        }
+
+        public bool CheckIfFinalQuestion()
+        {
+            if (CategoryIndex == 6) return true;
+            else
+            {
+                CategoryIndex++;
+                CurrentCategory = Categories[CategoryIndex];
+                return false;
+            }
         }
 
     }
