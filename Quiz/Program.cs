@@ -1,25 +1,44 @@
 ﻿using Quiz;
 
+var person = new Person("Juri", "Nowak");
+
+
+
+
+
+
 var game = new Game();
 var message = new Message();
 message.DisplayWelcome();
-game.GetQuestion();
-var answer = game.CurrentQuestion.Show();
-if (game.IsCorrectAnswer(answer))
+
+while (true)
 {
-    if (game.CheckIfFinalQuestion())
+    game.GetQuestion();
+    var answer = game.CurrentQuestion.Show(game.IsWheelAvailable);
+    if (answer == 5)
     {
-        message.DisplayFinalScreen();
+        game.IsWheelAvailable= false;
+        game.GetQuestionWithWheel();
+        answer = game.CurrentQuestion.Show(game.IsWheelAvailable);
+    }
+
+    if (game.IsCorrectAnswer(answer))
+    {
+        if (game.CheckIfFinalQuestion())
+        {
+            message.DisplayFinalScreen();
+            break;
+        }
+        else
+        {
+            message.DisplayGoodAnswer();
+        }
     }
     else
     {
-        message.DisplayGoodAnswer();
-        
+        message.DisplayGameOver();
+        break;
     }
 }
-else
-{
-    message.DisplayGameOver();
-}
 
-Console.WriteLine(answer);
+Console.ReadLine();

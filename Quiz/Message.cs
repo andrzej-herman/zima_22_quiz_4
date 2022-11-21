@@ -37,6 +37,7 @@ namespace Quiz
             Console.WriteLine("Super !!! Udało Ci się ukończyć QUIZ.");
             Console.WriteLine("GRATULACJE !!!");
             Console.WriteLine("GAME OVER");
+            Console.ForegroundColor = ConsoleColor.White;
             Console.ReadLine();
         }
 
@@ -46,7 +47,9 @@ namespace Quiz
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Brawo to prawidłowa odpowiedź");
             Console.WriteLine("Naciśnij ENTER aby zobaczyć następne pytanie ...");
+            Console.ForegroundColor = ConsoleColor.White;
             Console.ReadLine();
+            Console.Clear();
         }
     }
 }

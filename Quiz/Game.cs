@@ -20,6 +20,7 @@ namespace Quiz
                 .ToList();
 
             CurrentCategory = Categories[CategoryIndex];
+            IsWheelAvailable = true;
         }
 
         public int CurrentCategory { get; set; }
@@ -28,6 +29,7 @@ namespace Quiz
         public Random Random { get; set; }
         public List<int> Categories { get; set; }
         public int CategoryIndex { get; set; }
+        public bool IsWheelAvailable { get; set; }
 
         private void GenerateQuestions()
         {
@@ -66,6 +68,15 @@ namespace Quiz
                 CurrentCategory = Categories[CategoryIndex];
                 return false;
             }
+        }
+
+        public void GetQuestionWithWheel()
+        {
+            var badAnswers = CurrentQuestion.Answers.Where(a => !a.IsCorrect);
+            badAnswers = badAnswers.OrderBy(a => Random.Next());
+            var removed = badAnswers.Take(2).ToList();  
+            CurrentQuestion.Answers.Remove(removed[0]);
+            CurrentQuestion.Answers.Remove(removed[1]);
         }
 
     }
