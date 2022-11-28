@@ -1,11 +1,6 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Quiz
+namespace QuizLogic
 {
     public class Game
     {
@@ -50,7 +45,7 @@ namespace Quiz
                 answer.DisplayOrder = index;
                 index++;
             }
-           
+
             CurrentQuestion = selectedQuestion;
         }
 
@@ -74,10 +69,9 @@ namespace Quiz
         {
             var badAnswers = CurrentQuestion.Answers.Where(a => !a.IsCorrect);
             badAnswers = badAnswers.OrderBy(a => Random.Next());
-            var removed = badAnswers.Take(2).ToList();  
+            var removed = badAnswers.Take(2).ToList();
             CurrentQuestion.Answers.Remove(removed[0]);
             CurrentQuestion.Answers.Remove(removed[1]);
         }
-
     }
 }

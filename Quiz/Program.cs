@@ -1,42 +1,43 @@
 ﻿using Quiz;
+using QuizLogic;
 
-var person = new Person("Juri", "Nowak");
-
-
-
+var price = 34.50m;
+Console.WriteLine(StringHelper.ConvertToZl(price));
 
 
 
 var game = new Game();
-var message = new Message();
-message.DisplayWelcome();
+Message.DisplayWelcome();
+
+
+
 
 while (true)
 {
     game.GetQuestion();
-    var answer = game.CurrentQuestion.Show(game.IsWheelAvailable);
+    var answer = Message.Show(game.CurrentQuestion, game.IsWheelAvailable);
     if (answer == 5)
     {
         game.IsWheelAvailable= false;
         game.GetQuestionWithWheel();
-        answer = game.CurrentQuestion.Show(game.IsWheelAvailable);
+        answer = Message.Show(game.CurrentQuestion, game.IsWheelAvailable);
     }
 
     if (game.IsCorrectAnswer(answer))
     {
         if (game.CheckIfFinalQuestion())
         {
-            message.DisplayFinalScreen();
+            Message.DisplayFinalScreen();
             break;
         }
         else
         {
-            message.DisplayGoodAnswer();
+            Message.DisplayGoodAnswer();
         }
     }
     else
     {
-        message.DisplayGameOver();
+        Message.DisplayGameOver();
         break;
     }
 }
